@@ -1,6 +1,6 @@
 # Slash Commands
 
-Add the functionality of [slash Commands](https://github.com/discord/discord-api-docs/pull/2295) in discordia 2.x!
+Add the functionality of [slash commands](https://github.com/discord/discord-api-docs/pull/2295) in discordia 2.x!
 
 ## Example
 
