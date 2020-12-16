@@ -37,6 +37,14 @@ client:run("Bot TOKEN")
 
 Note: `command:commit()` **must** be ran in a coroutine, everything else doesn't need to be within a coroutine.
 
+## Installation
+
+You can install via lit.
+
+```sh
+lit install SovietKitsune/slashCommands
+```
+
 ## TODO
 
 * [ ] - Add functionality for subcommands
