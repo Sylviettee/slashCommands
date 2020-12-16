@@ -1,0 +1,6 @@
+{
+    "Lua.runtime.version": "LuaJIT",
+    "Lua.diagnostics.globals": [
+        "process"
+    ]
+}

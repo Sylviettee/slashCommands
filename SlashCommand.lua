@@ -151,19 +151,13 @@ end
 ---@param cb fun(ctx: Context)
 function SlashCommand:execute(cb)
    if tablex.count(SlashCommand.registered) == 0 then
-      self._client:on('raw', function(str)
-         local data = json.decode(str)
-
-         local d = data.d
-
-         if data.t == 'INTERACTION_CREATE' then
-            for i, v in pairs(SlashCommand.registered) do
-               if i == d.data.name then
-                  return v._cb(context(v._client, d, v._options))
-               end
+      function self._client._events.INTERACTION_CREATE(d)
+         for i, v in pairs(SlashCommand.registered) do
+            if i == d.data.name then
+               return v._cb(context(v._client, d, v._options))
             end
          end
-      end)
+      end
    end
 
    self._cb = cb
@@ -179,7 +173,9 @@ function SlashCommand:commit(guild)
    local endpoint = guild and routes.APPLICATION_GUILD_COMMANDS or routes.APPLICATION_COMMANDS
 
    -- Use cached if it exists
-   local data = guild and self:_fetch(guild) or SlashCommand.globals or self:_fetch()
+   local data = guild and self:_fetch(guild) or
+      #SlashCommand.globals > 0 and SlashCommand.globals or
+      self:_fetch()
 
    local exists
    local same

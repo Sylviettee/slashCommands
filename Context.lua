@@ -60,29 +60,17 @@ function Context:__init(client, data, arguments)
       -- oh god
 
       if argument.type == argumentType.boolean then
-         parsed[i] = v == 'true'
+         parsed[i] = v
       elseif argument.type == argumentType.integer then
          parsed[i] = tonumber(v)
       elseif argument.type == argumentType.string then
          parsed[i] = v
       elseif argument.type == argumentType.user then
-         local username, discriminator = v:match('@(.*)#(%d+)$')
-
-         if username and discriminator then
-            local member = guild.members:find(function(m)
-               return m.username == username and m.discriminator == discriminator
-            end)
-
-            parsed[i] = member
-         end
+         parsed[i] = guild:getMember(v)
       elseif argument.type == argumentType.role then
-         parsed[i] = guild.roles:find(function(r)
-            return r.name == v
-         end)
+         parsed[i] = guild:getRole(v)
       elseif argument.type == argumentType.channel then
-         parsed[i] = guild.channels:find(function(c)
-            return c.name == v
-         end)
+         parsed[i] = guild:getChannel(v)
       end
    end
 
