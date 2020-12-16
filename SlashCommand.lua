@@ -1,16 +1,12 @@
 ---@type discordia
 local discordia = require('discordia')
 
-local tablex = discordia.extensions.table
-
 local class = discordia.class
-
-local json = require('json')
-
-local f = string.format
 
 local routes = require('./endpoints')
 local context = require('./Context')
+
+local f = string.format
 
 local function equals(o1, o2, ignore_mt)
    if o1 == o2 then return true end
@@ -150,12 +146,14 @@ end
 --- Add an execute function to the command
 ---@param cb fun(ctx: Context)
 function SlashCommand:execute(cb)
-   if tablex.count(SlashCommand.registered) == 0 then
+   if not next(SlashCommand.registered) then
       function self._client._events.INTERACTION_CREATE(d)
-         for i, v in pairs(SlashCommand.registered) do
-            if i == d.data.name then
-               return v._cb(context(v._client, d, v._options))
-            end
+         local cmd = SlashCommand.registered[d.data.name]
+
+         if cmd then
+            cmd._cb(context(cmd._client, d, cmd._options))
+         else
+            self._client:warning('Unhandled interaction `%s`', d.data.name)
          end
       end
    end
@@ -185,7 +183,7 @@ function SlashCommand:commit(guild)
 
    -- Use cached if it exists
    local data = guild and self:_fetch(guild) or
-      #SlashCommand.globals > 0 and SlashCommand.globals or
+      next(SlashCommand.globals) and SlashCommand.globals or
       self:_fetch()
 
    local exists

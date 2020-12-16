@@ -40,4 +40,4 @@ Note: `command:commit()` **must** be ran in a coroutine, everything else doesn't
 ## TODO
 
 * [ ] - Add functionality for subcommands
-* [ ] - Fix bugs
+* [x] - Fix bugs
