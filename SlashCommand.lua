@@ -165,6 +165,17 @@ function SlashCommand:execute(cb)
    SlashCommand.registered[self._name] = self
 end
 
+--- Delete the slash commands
+---
+--- **This cannot be undone!**
+---@param guild string The id of the guild to delete the command from
+---@overload fun(): any, nil | string
+function SlashCommand:delete(guild)
+   local endpoint = guild and routes.APPLICATION_GUILD_COMMANDS or routes.APPLICATION_COMMANDS
+
+   return self._client._api:request('DELETE', f(endpoint, self._id, guild))
+end
+
 --- Push the new command to the api
 ---@param guild string The id of the guild to push to
 ---@overload fun(): any, nil | string
