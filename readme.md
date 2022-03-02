@@ -1,3 +1,5 @@
+# DEPRECATED, USE [SPAR'S INSTEAD](https://github.com/GitSparTV/discordia-slash/)
+
 # Slash Commands
 
 Add the functionality of [slash commands](https://discord.com/developers/docs/interactions/slash-commands) in discordia 2.x!
